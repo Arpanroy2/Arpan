@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌌 SOL SYSTEM • Nasa edition</title>
+    <style>
+        /* GLOBAL RESETS + FONTS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* animated cosmic background — nebula + twinkling stars */
+        body {
+            min-height: 100vh;
+            background: radial-gradient(ellipse at 30% 40%, #0b0b2b, #03010a);
+            font-family: 'Segoe UI', 'Arial Black', 'Trebuchet MS', sans-serif;
+            color: #f0e9ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.2rem 1.2rem 3rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* animated star field + deep space glow */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 200 200"><circle cx="20" cy="30" r="1.5" fill="white" opacity="0.8"/><circle cx="80" cy="12" r="1.2" fill="white" opacity="0.9"/><circle cx="150" cy="40" r="2" fill="white" opacity="0.7"/><circle cx="45" cy="85" r="1" fill="white" opacity="1"/><circle cx="110" cy="70" r="1.8" fill="white" opacity="0.6"/><circle cx="180" cy="95" r="1.2" fill="white" opacity="0.8"/><circle cx="10" cy="150" r="1.4" fill="white" opacity="0.9"/><circle cx="70" cy="170" r="2.2" fill="white" opacity="0.5"/><circle cx="140" cy="140" r="1.1" fill="white" opacity="0.7"/><circle cx="190" cy="180" r="1.6" fill="white" opacity="0.8"/><circle cx="55" cy="40" r="1.3" fill="%23ffe68f" opacity="0.9"/><circle cx="130" cy="20" r="1.8" fill="%23b3d9ff" opacity="0.6"/></svg>');
+            background-size: 300px 300px;
+            opacity: 0.5;
+            animation: driftStars 210s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* additional slow moving gradient (pulsing aurora) */
+        body::after {
+            content: '';
+            position: fixed;
+            top: -20%; left: -20%; width: 140%; height: 140%;
+            background: radial-gradient(circle at 70% 40%, rgba(255, 120, 240, 0.15) 0%, transparent 35%),
+                        radial-gradient(circle at 20% 80%, rgba(70, 200, 255, 0.2) 0%, transparent 45%),
+                        radial-gradient(circle at 90% 70%, rgba(255, 215, 0, 0.1) 0%, transparent 40%);
+            filter: blur(40px);
+            animation: slowPulse 18s ease-in-out infinite alternate;
+            z-index: 0;
+        }
+
+        @keyframes driftStars {
+            0% { background-position: 0 0; }
+            100% { background-position: 300px 300px; }
+        }
+
+        @keyframes slowPulse {
+            0% { opacity: 0.3; transform: scale(1) rotate(0deg); }
+            100% { opacity: 0.7; transform: scale(1.1) rotate(2deg); }
+        }
+
+        /* main content sits above bg */
+        .wrapper {
+            max-width: 1300px;
+            width: 100%;
+            position: relative;
+            z-index: 5;
+            backdrop-filter: blur(1px);
+        }
+
+        /* TITLE SECTION — mind blowing intro */
+        .hero {
+            text-align: center;
+            margin-bottom: 2.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            background: linear-gradient(145deg, #fff8c9, #fcb1ff, #6dd5ff, #ffe69b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px cyan, 0 0 40px blueviolet;
+            animation: glowShift 5s infinite alternate;
+            line-height: 1.1;
+        }
+
+        @keyframes glowShift {
+            0% { filter: drop-shadow(0 0 5px #f0f) drop-shadow(0 0 15px #ff0); }
+            100% { filter: drop-shadow(0 0 15px #0ff) drop-shadow(0 0 30px #f6f); }
+        }
+
+        .mind-blown-badge {
+            background: rgba(10, 2, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border: 2px solid gold;
+            border-radius: 60px;
+            padding: 0.7rem 2rem;
+            display: inline-block;
+            margin: 1rem 0 0.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fffacd;
+            box-shadow: 0 0 30px violet;
+            transform: rotate(-1deg);
+            animation: borderGlow 1.5s infinite alternate;
+        }
+
+        @keyframes borderGlow {
+            from { border-color: #ffb8f2; box-shadow: 0 0 10px #ff66c0; }
+            to { border-color: #f0ff70; box-shadow: 0 0 35px #ffd966; }
+        }
+
+        /* GRID — planets cards */
+        .planet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 2rem 1.2rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        /* CARD STYLE — high‑contrast, glassmorph + intense colours */
+        .card {
+            background: rgba(8, 5, 25, 0.55);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 200, 240, 0.4);
+            border-radius: 3rem 1.5rem 3rem 1.5rem;
+            padding: 1.8rem 1rem 1.8rem;
+            box-shadow: 0 30px 40px -20px black, 0 0 0 2px rgba(200, 0, 255, 0.2) inset, 0 0 30px #6f00ff4d;
+            transition: 0.2s ease-in-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transform: rotate(0deg);
+            animation: cardLevitate 8s infinite alternate ease-in-out;
+        }
+
+        .card:hover {
+            transform: scale(1.04) rotate(0.5deg);
+            border-color: gold;
+            box-shadow: 0 0 50px hotpink, 0 0 20px aqua inset;
+            transition: 0.15s;
+        }
+
+        /* individual floating delay */
+        .card:nth-child(odd) { animation-duration: 7s; }
+        .card:nth-child(3) { animation-duration: 9s; animation-delay: -1s; }
+        .card:nth-child(5) { animation-duration: 12s; }
+        .card:nth-child(7) { animation-duration: 6.5s; }
+
+        @keyframes cardLevitate {
+            0% { transform: translateY(0px) rotate(-0.2deg); }
+            100% { transform: translateY(-12px) rotate(0.5deg); }
+        }
+
+        /* planet images (placeholder names — you must place jpgs) */
+        .planet-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid gold;
+            box-shadow: 0 0 35px deepskyblue, 0 0 10px 4px #f0f inset;
+            margin-bottom: 1rem;
+            transition: 0.3s;
+            background: #2a1e3a; /* fallback */
+        }
+
+        /* simulate actual images — in production replace src */
+        .planet-img:hover {
+            transform: rotate(360deg) scale(1.1);
+            border-color: white;
+            box-shadow: 0 0 70px cyan, 0 0 30px magenta;
+            transition: 0.5s;
+        }
+
+        /* PLANET NAME — in motion! (continuous animation) */
+        .planet-name {
+            font-size: 2.2rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #ffe99c, #ffb3fe, #9ad0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 3px;
+            margin: 0.5rem 0 0.2rem;
+            text-shadow: 2px 2px 10px violet;
+            display: inline-block;
+            animation: moveName 3.5s infinite alternate ease-in-out;
+        }
+
+        @keyframes moveName {
+            0% { transform: translateX(0px) skewX(0deg) scale(1); text-shadow: 0 0 5px magenta; }
+            25% { transform: translateX(6px) skewX(2deg) scale(1.05); text-shadow: 0 0 15px cyan; }
+            75% { transform: translateX(-6px) skewX(-2deg) scale(1.02); text-shadow: 0 0 20px yellow; }
+            100% { transform: translateX(4px) skewX(1deg) scale(1.08); text-shadow: 0 0 30px lime; }
+        }
+
+        /* minor variation for each name */
+        .card:nth-child(1) .planet-name { animation-delay: 0.1s; animation-duration: 3.2s; }
+        .card:nth-child(2) .planet-name { animation-delay: 0.7s; animation-duration: 4.1s; }
+        .card:nth-child(3) .planet-name { animation-delay: 0.2s; animation-duration: 3.6s; }
+        .card:nth-child(4) .planet-name { animation-delay: 1s; animation-duration: 3s; }
+        .card:nth-child(5) .planet-name { animation-delay: 0.4s; animation-duration: 4.4s; }
+        .card:nth-child(6) .planet-name { animation-delay: 1.3s; animation-duration: 3.8s; }
+        .card:nth-child(7) .planet-name { animation-delay: 0s; animation-duration: 5s; }
+        .card:nth-child(8) .planet-name { animation-delay: 0.9s; animation-duration: 3.3s; }
+        .card:nth-child(9) .planet-name { animation-delay: 0.5s; animation-duration: 4.7s; }
+        .card:nth-child(10) .planet-name { animation-delay: 1.1s; animation-duration: 3.9s; }
+
+        /* NASA DATA description — spicy facts */
+        .description {
+            font-size: 0.94rem;
+            line-height: 1.45;
+            color: #e1d7ff;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.8rem;
+            border-radius: 30px 10px 30px 10px;
+            margin: 1rem 0 1rem;
+            border-left: 5px solid gold;
+            border-right: 2px solid cyan;
+            backdrop-filter: blur(3px);
+            text-shadow: 0 0 5px black;
+            font-weight: 500;
+        }
+
+        /* WIKI LINK — eye catching */
+        .wiki-link {
+            display: inline-block;
+            background: linear-gradient(145deg, #ff9100, #b82eff);
+            color: white;
+            font-weight: bold;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            box-shadow: 0 0 25px deepskyblue;
+            border: 2px solid white;
+            margin: 0.6rem 0 0.3rem;
+            transition: 0.2s;
+            text-transform: uppercase;
+            transform: rotate(-1deg);
+            animation: linkJiggle 2.2s infinite alternate;
+        }
+
+        .wiki-link:hover {
+            background: linear-gradient(145deg, #ffea62, #ff44e6);
+            color: black;
+            box-shadow: 0 0 50px red, 0 0 20px blue;
+            transform: scale(1.1) rotate(1deg);
+        }
+
+        @keyframes linkJiggle {
+            0% { transform: rotate(-1deg) scale(1); }
+            100% { transform: rotate(2deg) scale(1.05); }
+        }
+
+        /* MIND BLOWING extra section */
+        .feature-nasa {
+            display: flex;
+            flex-wrap: wrap;
+            background: rgba(15, 0, 30, 0.8);
+            backdrop-filter: blur(18px);
+            border-radius: 80px 20px 80px 20px;
+            margin: 3.5rem 0 1rem;
+            padding: 2rem 2rem;
+            border: 3px solid #f5b9ff;
+            box-shadow: 0 0 70px #d58eff;
+        }
+
+        .feature-text {
+            flex: 1;
+            min-width: 260px;
+            font-size: 1.3rem;
+            padding-right: 1rem;
+        }
+
+        .feature-text h2 {
+            font-size: 2.5rem;
+            background: linear-gradient(145deg, #ffbc6e, #a7feff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textFlicker 3s infinite;
+        }
+
+        @keyframes textFlicker {
+            0% { opacity: 1; text-shadow: 0 0 10px magenta; }
+            50% { opacity: 1; text-shadow: 0 0 30px cyan, 0 0 60px blue; }
+        }
+
+        .feature-highlight {
+            background: #13002b;
+            border-radius: 50px;
+            padding: 1.2rem;
+            font-weight: bold;
+            border: 2px dashed gold;
+            color: #fcd9b8;
+            box-shadow: 0 0 30px cyan;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 2.8rem; }
+            .planet-name { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- HEADER with animated bg text -->
+        <div class="hero">
+            <h1>✦ OUR SOLAR SYSTEM ✦</h1>
+            <div class="mind-blown-badge">🧠 ⚡ NASA FUSION DATA • REAL MOTION NAMES</div>
+            <p style="font-size: 1.4rem; color: #fff2aa; text-shadow: 0 0 10px fuchsia;">planets dance • 4.6 billion years of fire</p>
+        </div>
+
+        <!-- PLANETS GRID (exactly 10 cards with correct images names) -->
+        <div class="planet-grid">
+            <!-- 1. SUN -->
+            <div class="card">
+                <img class="planet-img" src="sun.jpg" alt="Sun" onerror="this.src='https://via.placeholder.com/130/ffaa00/000?text=☀️'">
+                <span class="planet-name">☀️ SUN</span>
+                <div class="description"><strong>NASA• 99.86% mass</strong> · 15.7M K core · 8 min to Earth · G2V yellow dwarf · 4.6 bn yrs · solar flares</div>
+                <a class="wiki-link" href="https://en.wikipedia.org/wiki/Sun" target="_blank">WIKI 🌞</a>
+            </div>
+            <!-- 2. MERCURY -->
+            <div class="card">
+                <img class="planet-img" src="mercury.jpg" alt="Mercury" onerror="this.src='https://via.placeholder.com/130/aaaaaa/000?text=☿'">
+                <span class="planet-name">☿ MERCURY</span>
+                <div class="description"><strong>NASA • 0.4 AU</strong> · 430°C day / -180°C night · ice in shadows · 59d rotation · iron core</div>
+                <a class="wiki-link" href="https://en.wikipedia.org/wiki/Mercury_(planet)" target="_blank">WIKI ☿</a>
+            </div>
+            <!-- 3. VENUS -->
+            <div class="card">
+                <img class="planet-img" src="venus.jpg" alt="Venus" onerror="this.src='https://via.placeholder.com/130/f0c0a0/000?text=♀️'">
+                <span class="planet-name">♀️ VENUS</span>
+                <div class="description"><strong>NASA • 462°C</strong> · sulfuric acid clouds · 90 atm pressure · retrograde · hottest planet</div>
+                <a class="wiki-link" href="https://en.wikipedia.org/wiki/Venus" target="_blank">WIKI ♀️</a>
+            </div>
+            <!-- 4. EARTH -->
+            <div class="card">
+                <img class="planet-img" src="earth.jpg" alt="Earth" onerror="this.src='https://via.placeholder.com/130/2288ff/000?text=🌍'">
+                <span class="planet-name">🌍 EARTH</span>
+                <div class="description"><strong>NASA • only life</strong> · 71% ocean · 1 AU · 23.5° tilt · magnetic field · one moon</div>
+                <a class="wiki-link" href="https://en.wikipedia.org/wiki/Earth" target="_blank">WIKI 🌍</a>
+            </div>
+            <!-- 5. MARS -->
+            <div class="card">
+                <img class="planet-img" src="mars.jpg" alt="Mars" onerror="this.src='https://via.placeholder.com/130/c05a30/000?text=♂️'">
+                <span class="planet-name">♂️ MARS</span>
+                <div class="description"><strong>NASA • Olympus Mons</strong> · 687d orbit · iron oxide · thin CO₂ · ancient rivers · 2 moons</div>
+                <a class="wiki-link" href="https://en.wikipedia.org/wiki/Mars" target="_blank">WIKI ♂️</a>
+            </div>
+            <!-- 6. JUPITER -->
+            <div class="card">
+                <img class="planet-img" src="jupiter.jpg" alt="Jupiter" onerror="this.src='https://via.placeholder.com/130/c98e5a/000?text=♃'">
+                <span class="planet-name">♃ JUPITER</span>
+                <div class="description"><strong>NASA • 318 × Earth</strong> · Great Red Spot · 79 moons · 9h55m day · strongest magnetic field</div>
+                <a class="wiki-link" href="https://en.wikipedia.org/wiki/Jupiter" target="_blank">WIKI ♃</a>
+            </div>
+            <!-- 7. SATURN -->
+            <div class="card">
+                <img class="planet-img" src="saturn.jpg" alt="Saturn" onerror="this.src='https://via.placeholder.com/130/e0b060/000?text=🪐'">
+                <span class="planet-name">🪐 SATURN</span>
+                <div class="description"><strong>NASA • rings</strong> · 83 moons · density less water · hexagon storm · 9.5 AU</div>
+                <a class="wiki-link" href="https://en.wikipedia.org/wiki/Saturn" target="_blank">WIKI 🪐</a>
+            </div>
+            <!-- 8. URANUS -->
+            <div class="card">
+                <img class="planet-img" src="uranus.jpg" alt="Uranus" onerror="this.src='https://via.placeholder.com/130/a0e0f0/000?text=⛢'">
+                <span class="planet-name">⛢ URANUS</span>
+                <div class="description"><strong>NASA • ice giant</strong> · 98° tilt (sideways) · 13 rings · 27 moons · -224°C</div>
+                <a class="wiki-link" href="https://en.wikipedia.org/wiki/Uranus" target="_blank">WIKI ⛢</a>
+            </div>
+            <!-- 9. NEPTUNE -->
+            <div class="card">
+                <img class="planet-img" src="neptune.jpg" alt="Neptune" onerror="this.src='https://via.placeholder.com/130/4060d0/000?text=♆'">
+                <span class="planet-name">♆ NEPTUNE</span>
+                <div class="description"><strong>NASA • supersonic winds</strong> · 1,600 km/h · 14 moons · dark spot · 30 AU · 165y orbit</div>
+                <a class="wiki-link" href="https://en.wikipedia.org/wiki/Neptune" target="_blank">WIKI ♆</a>
+            </div>
+            <!-- 10. PLUTO (dwarf) -->
+            <div class="card">
+                <img class="planet-img" src="pluto.jpg" alt="Pluto" onerror="this.src='https://via.placeholder.com/130/d2b48c/000?text=♇'">
+                <span class="planet-name">♇ PLUTO</span>
+                <div class="description"><strong>NASA • 5 moons</strong> · Charon large · ice mountains · 248y orbit · heart glacier</div>
+                <a class="wiki-link" href="https://en.wikipedia.org/wiki/Pluto" target="_blank">WIKI ♇</a>
+            </div>
+        </div>
+
+        <!-- 🚀 MIND BLOWING FEATURE (NASA research summary + interactive extras) -->
+        <div class="feature-nasa">
+            <div class="feature-text">
+                <h2>⚡ NASA CORE DATA ⚡</h2>
+                <p style="font-size: 1.6rem; margin: 0.5rem 0; background: linear-gradient(145deg, gold, cyan); -webkit-background-clip: text; background-clip: text; color: transparent;">SUN: 99.86% of mass</p>
+                <p>🌋 <strong>mind-blowing:</strong> Sun's core = 15.7 million K · 600 million tons H fused per sec · 4M tons converted to energy (E=mc²!)</p>
+                <p>🪐 Jupiter protects Earth from comets · Mars has largest volcano (25 km high) · Saturn would FLOAT in water!</p>
+                <p>🌀 Neptune wind speed up to 2,100 km/h (faster than sound on Earth) · Uranus was hit & tilted · Venus day longer than year</p>
+                <p>🔭 <em>all data from NASA / Wikipedia sources — links above</em></p>
+            </div>
+            <div class="feature-highlight">
+                <span style="font-size: 2rem;">⏳ 4.6 billion years</span><br>
+                🌞 Sun rotates every 27 days (equator) ·  <br>
+                ⭐ 8 light minutes to Earth · 1 AU = 150 million km<br>
+                🛸 <a href="https://en.wikipedia.org/wiki/Solar_System" target="_blank" style="color: #feffb8;">EXPLORE WIKIPEDIA</a>
+            </div>
+        </div>
+
+        <!-- second motion text: scrolling banner (extra eye-catch) -->
+        <div style="width: 100%; background: rgba(255, 20, 150, 0.25); border-radius: 60px; padding: 1.2rem 0; margin: 2rem 0; border: 3px dotted cyan; overflow: hidden; white-space: nowrap; box-shadow: 0 0 40px gold;">
+            <div style="display: inline-block; animation: scrollText 18s linear infinite; font-size: 1.8rem; font-weight: bold; color: #fffeca; text-shadow: 0 0 10px red, 0 0 30px blue;">
+                🛸  •  SUN contains 99.86% of solar system mass  •  OCEANS ON EUROPA (Jupiter's moon)  •  PLUTO HEART  •  MARS has clouds  •  RINGS of Saturn  •  🌍 1.3 million Earths inside SUN  •  🌌
+            </div>
+        </div>
+        <style>
+            @keyframes scrollText {
+                0% { transform: translateX(10%); }
+                100% { transform: translateX(-80%); }
+            }
+        </style>
+
+        <!-- footer with Nasa tribute -->
+        <div style="text-align: center; padding: 2rem 0 0.5rem; color: #f8b0ff; font-size: 1.3rem; border-top: 2px solid violet;">
+            🌟 All planet names in motion • data from NASA & Wikipedia • animated deep space • fonts with high‑color grading 🌟
+        </div>
+    </div>
+</body>
+</html>
